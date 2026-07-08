@@ -1,7 +1,14 @@
+import heapq
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         freq = Counter(nums)
+        minHeap = []
 
-        li = sorted(freq, key = lambda k: freq[k], reverse = True)
+        for elem, frequ in freq.items():
+            heapq.heappush(minHeap, (frequ, elem))
+
+            if len(minHeap) > k:
+                heapq.heappop(minHeap)
         
-        return li[:k]
+        li = [x[1] for x in list(minHeap)]
+        return li[::-1]
